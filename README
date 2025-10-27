@@ -1,31 +1,26 @@
-pr
-==
+# pr
 
 Simple package manager for POSIX systems.
 
-Requirements
-------------
+## Requirements
 
 - C99 compiler
 - C POSIX library
 - OpenSSL
 
-Installaton
------------
+## Installaton
 
 	$ make
 	# make install
 
-Usage
------
+## Usage
 
 	pr -a [-s repo]
 	pr -i [-s repo] [-p prefix] package ...
 	pr -l [-s repo] [-p prefix]
 	pr -u [-s repo] [-p prefix] [-r] package ...
 
-Repositories
-------------
+## Repositories
 
 The repository tree must have a set of directories, each named after the
 package it represents: each of these directories must contain the following
