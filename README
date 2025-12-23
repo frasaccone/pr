@@ -82,7 +82,7 @@ initialized with a `/src` directory and a `/log` file.
 > installed to the root of the temporary directory and is ignored when
 > installing the package.
 >
-> Additionally, when *runtime* (written literally) is present after `PACKAGE`,
+> Additionally, when _runtime_ (written literally) is present after `PACKAGE`,
 > `PACKAGE` gets also installed to the system.
 
 > `sources`
