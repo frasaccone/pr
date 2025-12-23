@@ -1,3 +1,0 @@
-- Use linked lists for lines, depends, outs and sources
-- Refactor the whole codebase to use less code
-  - Use multiple source files
