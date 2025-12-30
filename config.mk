@@ -4,6 +4,6 @@ MANPREFIX = $(PREFIX)/share/man
 CC = cc
 
 CFLAGS  = -std=c99 -Wall -Wextra -Wpedantic
-LDFLAGS = -s -static
+LDFLAGS =
 
-LIBS = -lssl -lcrypto -lc
+LIBS = -lssl -lcrypto
