@@ -1969,8 +1969,7 @@ main(int argc, char *argv[])
 	struct PackageNode *pn;
 
 	if (getuid()) {
-		fprintf(stderr, "%s: Superuser privileges are required\n",
-		        argv[0]);
+		fprintf(stderr, "%s: Root privileges are required\n", argv[0]);
 		cleanup();
 		return EXIT_FAILURE;
 	}
