@@ -87,7 +87,6 @@ struct Sources {
 };
 
 static void cleanup(void);
-static int pnamecmp(const char **a, const char **b);
 static int copydirrecursive(const char s[PATH_MAX], const char d[PATH_MAX]);
 static int copyfile(const char s[PATH_MAX], const char d[PATH_MAX],
                     unsigned int ressym);
@@ -109,6 +108,7 @@ static int packageisinstalled(char pname[NAME_MAX],
 static unsigned int packageisnochroot(char pname[NAME_MAX]);
 static int packageouts(char pname[NAME_MAX], struct Outs *outs);
 static int packagesources(char pname[NAME_MAX], struct Sources *srcs);
+static int pnamecmp(const char **a, const char **b);
 static void printerrno(const char *s);
 static void printferr(const char *m, ...);
 static int printinstalled(struct PackageNames pkgs);
@@ -165,12 +165,6 @@ cleanup(void)
 
 	printf("\r\033[K");
 	fflush(stdout);
-}
-
-int
-pnamecmp(const char **a, const char **b)
-{
-	return strncmp(*a, *b, NAME_MAX);
 }
 
 int
@@ -1104,6 +1098,12 @@ packagesources(char pname[NAME_MAX], struct Sources *srcs)
 	srcs->l = i;
 
 	return EXIT_SUCCESS;
+}
+
+int
+pnamecmp(const char **a, const char **b)
+{
+	return strncmp(*a, *b, NAME_MAX);
 }
 
 void
