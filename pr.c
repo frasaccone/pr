@@ -303,7 +303,8 @@ copyfile(const char s[PATH_MAX], const char d[PATH_MAX],
 
 	if (direxists(d) && rmdirrecursive(d)) return EXIT_FAILURE;
 
-	if ((dfd = open(d, O_WRONLY | O_CREAT | O_TRUNC, 0700)) == -1) {
+	if ((dfd = open(d, O_WRONLY | O_CREAT | O_TRUNC,
+	                sbuf.st_mode)) == -1) {
 		close(sfd);
 		printerrno("open");
 		return EXIT_FAILURE;
@@ -341,7 +342,7 @@ createtmpdir(char dir[TMPFILE_SIZE])
 	strncat(log, dir,    sizeof(log) - strlen(log) - 1);
 	strncat(log, "/log", sizeof(log) - strlen(log) - 1);
 
-	if ((logfd = open(log, O_WRONLY | O_CREAT | O_TRUNC, 0700)) == -1) {
+	if ((logfd = open(log, O_WRONLY | O_CREAT | O_TRUNC, 0600)) == -1) {
 		printerrno("open");
 		return EXIT_FAILURE;
 	}
@@ -696,7 +697,7 @@ installpackage(struct Package p)
 		       p.pname, p.srcd);
 		fflush(stdout);
 
-		if ((logf = open(log, O_WRONLY, 0700)) == -1) {
+		if ((logf = open(log, O_WRONLY, 0600)) == -1) {
 			printerrno("fopen");
 			exit(EXIT_FAILURE);
 		}
@@ -802,6 +803,11 @@ int
 mkdirrecursive(const char d[PATH_MAX])
 {
 	char *buf, *p = NULL;
+	mode_t mode, mask;
+
+	mask = umask(0);
+	mode = 0777 & ~mask;
+	umask(mask);
 
 	if (PATH_MAX <= strlen(d)) {
 		printferr("PATH_MAX exceeded");
@@ -817,7 +823,7 @@ mkdirrecursive(const char d[PATH_MAX])
 	for (p = buf + 1; *p; p++) {
 		if (*p == '/') {
 			*p = '\0';
-			if (mkdir(buf, 0700) && errno != EEXIST) {
+			if (mkdir(buf, mode) && errno != EEXIST) {
 				free(buf);
 				printerrno("mkdir");
 				return EXIT_FAILURE;
@@ -828,7 +834,7 @@ mkdirrecursive(const char d[PATH_MAX])
 
 	free(buf);
 
-	if (mkdir(d, 0700) && errno != EEXIST) {
+	if (mkdir(d, mode) && errno != EEXIST) {
 		printerrno("mkdir");
 		return EXIT_FAILURE;
 	}
